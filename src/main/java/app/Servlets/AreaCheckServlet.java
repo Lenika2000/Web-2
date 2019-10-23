@@ -22,20 +22,20 @@ public class AreaCheckServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         bean = (PointsTableBean) req.getSession().getAttribute("pointsBean");
-
-        String[] selectedX = req.getParameter("selectedX").split(",");
+        //throw new RuntimeException(req.getParameter("x") + " " + req.getParameter("y") + " " + req.getParameter("r"));
+        String[] selectedX = req.getParameterValues("x");
         double y = Double.parseDouble(req.getParameter("y"));
         int r = Integer.parseInt(req.getParameter("r"));
-        int timezoneOffset = Integer.parseInt(req.getParameter("timezoneOffset"));
+        //int timezoneOffset = Integer.parseInt(req.getParameter("timezoneOffset"));
 
         ArrayList<Point> points = new ArrayList<>();
-        Arrays.stream(selectedX).forEach((s)-> points.add(new Point(Double.parseDouble(s),y,r,timezoneOffset)));
+        Arrays.stream(selectedX).forEach( x -> points.add(new Point(Double.parseDouble(x),y,r,-3)));
 
 //        PrintWriter out = resp.getWriter();
 //        StringBuilder strresponse = new StringBuilder();
 
-        points.stream().forEach((s) -> {
-             bean.addPoint(s);
+        points.stream().forEach((point) -> {
+             bean.addPoint(point);
         });
 
 //        points.stream().forEach((s) -> strresponse.append(s.toJson() + "&") );

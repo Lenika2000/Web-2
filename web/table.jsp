@@ -6,9 +6,23 @@
 <jsp:useBean id="pointsBean" class="app.PointsTableBean" scope="session"/>
 <%--<tr> <th>N</th> <th>X</th> <th>Y</th> <th>R</th> <th><b>Результат</b></th> </tr>--%>
 <html>
+<head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="css/table.css">
+</head>
 <body>
-<table>
+<table border="1">
+    <tr>
+        <th width=53px>X</th>
+        <th width=53px>Y</th>
+        <th width=53px>R</th>
+        <th width=200px>Попадание</th>
+        <th width=111px>Текущее время</th>
+        <%--<th width=227px>Время выполнения скрипта</th>--%>
+    </tr>
 <%
+    @SuppressWarnings("unchecked")
     List<Point> list = pointsBean.getPoints();
 
     for (Point point : list) {
@@ -31,14 +45,12 @@
 
     <%--<% if (list.get(0).getR() == point.getR()) { %>--%>
     <script>
-        document.onload = function() {
             console.log("check");
-            drawPoint("<%=point.hit()?"green":"red"%>", <%=point.getX() %>, <%=point.getY() %>);
-        }
+            parent.drawPoint("<%=point.hit()?"green":"red"%>", <%=point.getX() %>, <%=point.getY() %>);
     </script>
     <%--<% } %>--%>
 </tr>
+    <%}%>
 </table>
-<%}%>
 </body>
 </html>

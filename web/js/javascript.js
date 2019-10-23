@@ -23,6 +23,7 @@ selectR.each(function (index, elem) {
     elem.addEventListener("click", function (e) {
         ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
         selectedR_value = $('select').val();
+        $('#r_id').attr("value", selectedR_value);
         drawGraph();
     });
 });
@@ -120,6 +121,7 @@ function wrongValue(value) {
 }
 
 function buttonCondition(){
+    // TODO Исправить
     if (checkX() && checkX()){
         switchButton();
     } else {
@@ -129,63 +131,63 @@ function buttonCondition(){
 
 
 //отправка
-$("#send_form").click(function (event) {
-    event.preventDefault();
-
-    $.ajax({
-        url: "ControllerServlet",
-        data: {selectedX: requestX.slice(0, -1) , y: textY, r: selectedR_value, timezoneOffset: new Date().getTimezoneOffset()},
-        type: 'GET',
-        success: function (data) {
-
-            $("table tr").remove(":not(:first)");
-            $("table tbody").remove(":not(:first)");
-            createTable();
-            document.querySelector("tbody").insertAdjacentHTML("beforeend", data.trim());
-
-            // data = data.slice(0, -2).split("&");
-            // data.forEach(function(value1){
-            //     let answer = jQuery.parseJSON(value1);
-            //
-            //     // ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
-            //     // drawGraph();
-            //     drawPoint(answer.hit?"green":"red",answer.x,answer.y); //отмечаем точку
-            //     createTable();
-            //     addRow("table", answer);
-            // })
-            // alert(data);
-
-            // $("#errorX").fadeTo(0, 0);
-            // $("#errorY").fadeTo(0, 0);
-            // $("#errorR").fadeTo(0, 0);
-            // //создание таблицы
-            // var answer = jQuery.parseJSON(data);
-            // if ("X" in answer) {
-            //     ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
-            //     drawGraph();
-            //     // drawPoint(answer.color); //отмечаем точку
-            //     createTable();
-            //     addRow("table", answer);
-            // } else {
-            //     if (!answer.checkX) {
-            //         $("#errorX").fadeTo(500, 1);
-            //     }
-            //     if (!answer.checkY) {
-            //         checkY(textY);
-            //     }
-            //     if (!answer.checkR) {
-            //         $("#errorR").fadeTo(500, 1);
-            //     }
-
-        //     }
-        }
-
-    });
-    // $("firstX").addClass("selected");
-    // $("firstR").addClass("selected");
-    // drawGraph();
-
-});
+// $("#send_form").click(function (event) {
+//     event.preventDefault();
+//
+//     $.ajax({
+//         url: "ControllerServlet",
+//         data: {selectedX: requestX.slice(0, -1) , y: textY, r: selectedR_value, timezoneOffset: new Date().getTimezoneOffset()},
+//         type: 'GET',
+//         success: function (data) {
+//
+//             $("table tr").remove(":not(:first)");
+//             $("table tbody").remove(":not(:first)");
+//             createTable();
+//             document.querySelector("tbody").insertAdjacentHTML("beforeend", data.trim());
+//
+//             // data = data.slice(0, -2).split("&");
+//             // data.forEach(function(value1){
+//             //     let answer = jQuery.parseJSON(value1);
+//             //
+//             //     // ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
+//             //     // drawGraph();
+//             //     drawPoint(answer.hit?"green":"red",answer.x,answer.y); //отмечаем точку
+//             //     createTable();
+//             //     addRow("table", answer);
+//             // })
+//             // alert(data);
+//
+//             // $("#errorX").fadeTo(0, 0);
+//             // $("#errorY").fadeTo(0, 0);
+//             // $("#errorR").fadeTo(0, 0);
+//             // //создание таблицы
+//             // var answer = jQuery.parseJSON(data);
+//             // if ("X" in answer) {
+//             //     ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
+//             //     drawGraph();
+//             //     // drawPoint(answer.color); //отмечаем точку
+//             //     createTable();
+//             //     addRow("table", answer);
+//             // } else {
+//             //     if (!answer.checkX) {
+//             //         $("#errorX").fadeTo(500, 1);
+//             //     }
+//             //     if (!answer.checkY) {
+//             //         checkY(textY);
+//             //     }
+//             //     if (!answer.checkR) {
+//             //         $("#errorR").fadeTo(500, 1);
+//             //     }
+//
+//         //     }
+//         }
+//
+//     });
+//     // $("firstX").addClass("selected");
+//     // $("firstR").addClass("selected");
+//     // drawGraph();
+//
+// });
 
 $(document).ready(function() {
     $(window).keydown(function(event){

@@ -11,8 +11,15 @@ public class ControllerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String[] x = request.getParameterValues("x");
+        String y = request.getParameter("y");
+        String r = request.getParameter("r");
 
-        request.getServletContext().getRequestDispatcher("/AreaCheckServlet").forward(request, response);
+        if (x == null || y == null || r == null) {
+            request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+        } else {
+            request.getServletContext().getRequestDispatcher("/check").forward(request, response);
+        }
 
     }
 

@@ -255,6 +255,10 @@ select{
     max-height: 500px;
 }
 
+#iFrame {
+    width: 600px;
+}
+
 
 table {
     text-align: center;

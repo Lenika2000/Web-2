@@ -38,23 +38,23 @@
     </div>
 
     <div class="content">
-        <form>
+        <form  method="GET" action="check" target="result">
 
             <p>Изменение Х</p>
             <div id="checkBox_Container">
                 <div class="checkBoxDiv">
                     <label class="checkbox">
-                        <input type="checkbox" value="-4" checked/>
+                        <input type="checkbox" name="x" value="-4" checked/>
                         <div class="checkbox__text">-4</div>
                     </label>
                     <div class="separatingDiv"></div>
                     <label class="checkbox">
-                        <input type="checkbox" value="-3"/>
+                        <input type="checkbox" name="x" value="-3"/>
                         <div class="checkbox__text">-3</div>
                     </label>
                     <div class="separatingDiv"></div>
                     <label class="checkbox">
-                        <input type="checkbox" value="-2"/>
+                        <input type="checkbox" name="x" value="-2"/>
                         <div class="checkbox__text">-2</div>
                     </label>
                     <div id="errorX" class="errorImage" data-title='Не выбрано ни одно значение Х'><img
@@ -63,33 +63,33 @@
                 </div>
                 <div class="checkBoxDiv">
                     <label class="checkbox">
-                        <input type="checkbox" value="-1"/>
+                        <input type="checkbox" name="x" value="-1"/>
                         <div class="checkbox__text">-1</div>
                     </label>
                     <div class="separatingDiv" style="width: 23px;"></div>
                     <label class="checkbox">
-                        <input type="checkbox" value="0"/>
+                        <input type="checkbox" name="x" value="0"/>
                         <div class="checkbox__text">  0</div>
                     </label>
                     <div class="separatingDiv" style="width: 26px;"></div>
                     <label class="checkbox">
-                        <input type="checkbox" value="1"/>
+                        <input type="checkbox" name="x" value="1"/>
                         <div class="checkbox__text">  1</div>
                     </label>
                 </div>
                 <div class="checkBoxDiv">
                     <label class="checkbox">
-                        <input type="checkbox" value="2"/>
+                        <input type="checkbox" name="x" value="2"/>
                         <div class="checkbox__text">  2</div>
                     </label>
                     <div class="separatingDiv" style="width: 25px;" ></div>
                     <label class="checkbox">
-                        <input type="checkbox" value="3"/>
+                        <input type="checkbox" name="x" value="3"/>
                         <div class="checkbox__text">  3</div>
                     </label>
                     <div class="separatingDiv" style="width: 26px;"></div>
                     <label class="checkbox">
-                        <input type="checkbox" value="4"/>
+                        <input type="checkbox" name="x" value="4"/>
                         <div class="checkbox__text">  4</div>
                     </label>
                 </div>
@@ -98,7 +98,7 @@
 
             <p>Изменение Y</p>
 
-            <input type="text" id="form_input" placeholder="Введите значение в интервале от -3 до 3" name="Y"
+            <input type="text" id="form_input" placeholder="Введите значение в интервале от -3 до 3" name="y"
                    autocomplete="off">
             <div id="errorY" class="errorImage" data-title='Выход за пределы диапазона'><img src="pictures/error.png">
             </div>
@@ -112,6 +112,7 @@
                     <option>4</option>
                     <option>5</option>
                 </select>
+                <input type="hidden" autocomplete="off" name="r" id="r_id" value="1">
                 <%--<div id="errorR" class="errorImage" data-title='Выход за пределы диапазона'><img--%>
                         <%--src="pictures/error.png">--%>
                 <%--</div>--%>
@@ -128,17 +129,7 @@
 
 <div id="answer">
 
-    <table border="1">
-        <tr>
-            <th width=53px>X</th>
-            <th width=53px>Y</th>
-            <th width=53px>R</th>
-            <th width=200px>Попадание</th>
-            <th width=111px>Текущее время</th>
-            <%--<th width=227px>Время выполнения скрипта</th>--%>
-        </tr>
-
-    </table>
+    <iframe id="iFrame" name="result" ></iframe>
 
 </div>
 
