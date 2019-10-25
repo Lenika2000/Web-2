@@ -68,9 +68,6 @@ form , canvas {
     position: relative;
     height: 300px;
     text-align: center;
-    /*border: 2px solid grey;*/
-    /*border-radius: 10px;*/
-    /*background: rgba(60, 16, 44, 0.2);*/
 }
 
 form {

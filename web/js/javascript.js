@@ -52,19 +52,16 @@ function checkY(textY) {
             wrongValue("Некорректное значение Y");
             return false;
         } else {
-            if ((textY >= 10) || (textY <= -10)) {
+
+            if (textY > -3 && textY < 3) {
+                $("#errorY").fadeTo(0, 0);
+                return true;
+            } else {
                 wrongValue('Выход за пределы диапазона');
                 return false;
-            } else {
-                if (strCompare(textY, -3) > 0 && strCompare(textY, 3) < 0) {
-                    $("#errorY").fadeTo(0, 0);
-                    return true;
-                } else {
-                    wrongValue('Выход за пределы диапазона');
-                    return false;
-                }
             }
         }
+
     } else {
         wrongValue('Не введено значение Y');
         return false;
@@ -75,29 +72,6 @@ function wrongValue(value) {
     $("#errorY").attr("data-title", value);
     $("#errorY").fadeTo(500, 1);
     // disableButton();
-}
-
-function strCompare(first, second) {
-    first = new String(first);
-    second = new String(second);
-    if (first.includes(".")) {
-        while (first.length > second.length) {
-            if (second.indexOf('.') === -1) //если число не вещественное, то добавим .
-                second = second + '.';
-            second = second + '0'; //конкантенация строк , приведение второго числа к такому же числу знаков после запятой, как у 1
-        }
-    }
-
-    if (first.indexOf('-') > -1 && second.indexOf('-') > -1)
-
-        if (first.localeCompare(second) == 0)
-            return 0;
-        else if (first.localeCompare(second) == 1)
-            return -1;
-        else return 1;
-
-    else
-        return first.localeCompare(second);
 }
 
 $("#form_input").bind("input", function () {
@@ -127,89 +101,6 @@ function switchButton() {
     $("#send_form").css("background-color", "rgb(60, 16, 44)");
     $("#send_form").addClass("changeColor");
 }
-
-//отправка
-// $("#send_form").click(function (event) {
-//     event.preventDefault();
-//
-//     $.ajax({
-//         url: "ControllerServlet",
-//         data: {selectedX: requestX.slice(0, -1) , y: textY, r: selectedR_value, timezoneOffset: new Date().getTimezoneOffset()},
-//         type: 'GET',
-//         success: function (data) {
-//
-//             $("table tr").remove(":not(:first)");
-//             $("table tbody").remove(":not(:first)");
-//             createTable();
-//             document.querySelector("tbody").insertAdjacentHTML("beforeend", data.trim());
-//
-//             // data = data.slice(0, -2).split("&");
-//             // data.forEach(function(value1){
-//             //     let answer = jQuery.parseJSON(value1);
-//             //
-//             //     // ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
-//             //     // drawGraph();
-//             //     drawPoint(answer.hit?"green":"red",answer.x,answer.y); //отмечаем точку
-//             //     createTable();
-//             //     addRow("table", answer);
-//             // })
-//             // alert(data);
-//
-//             // $("#errorX").fadeTo(0, 0);
-//             // $("#errorY").fadeTo(0, 0);
-//             // $("#errorR").fadeTo(0, 0);
-//             // //создание таблицы
-//             // var answer = jQuery.parseJSON(data);
-//             // if ("X" in answer) {
-//             //     ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
-//             //     drawGraph();
-//             //     // drawPoint(answer.color); //отмечаем точку
-//             //     createTable();
-//             //     addRow("table", answer);
-//             // } else {
-//             //     if (!answer.checkX) {
-//             //         $("#errorX").fadeTo(500, 1);
-//             //     }
-//             //     if (!answer.checkY) {
-//             //         checkY(textY);
-//             //     }
-//             //     if (!answer.checkR) {
-//             //         $("#errorR").fadeTo(500, 1);
-//             //     }
-//
-//         //     }
-//         }
-//
-//     });
-//     // $("firstX").addClass("selected");
-//     // $("firstR").addClass("selected");
-//     // drawGraph();
-//
-// });
-
-$(document).ready(function () {
-    $(window).keydown(function (event) {
-        if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-        }
-    });
-});
-
-// function createTable() {
-//     cleanButton.css('display', "inline");
-//     $("table").css("display", "block");
-// }
-
-// // очистка таблицы
-// var cleanButton = $('#cleanTable');
-//
-// cleanButton.bind("click", function (e) {
-//     var tableRow = $("table tr");
-//     tableRow.remove(":not(:first)"); //удаляет в табл. все кроме шапки
-//     ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки)
-//     drawGraph();
-// });
 
 
 // отрисовка
@@ -406,6 +297,5 @@ function drawGraph() {
     ctx.fillStyle = "rgb(255, 162, 211)";
     drawFigures();
     drawNumbers();
-    // drawPoint(); //отмечаем точку
 
 }

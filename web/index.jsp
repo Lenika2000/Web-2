@@ -118,7 +118,7 @@
                 <input type="hidden" autocomplete="off" name="timezoneOffset"  id="timezoneOffset_id" value="">
             <div id="buttons">
                 <input id="send_form" type="submit" name="send" value="Отправить" disabled="disabled"/>
-                <%--<button id="cleanTable" type="button" style="display: none;">Очистить таблицу</button>--%>
+
             </div>
 
         </form>

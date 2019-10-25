@@ -13,16 +13,13 @@ import java.util.Arrays;
 
 
 public class AreaCheckServlet extends HttpServlet {
-    private PointsTableBean bean;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        PointsTableBean bean = (PointsTableBean) req.getSession().getAttribute("pointsBean");
 
         try {
             if (req.getParameter("y") != null && req.getParameterValues("x") != null) {
-
-                bean = (PointsTableBean) req.getSession().getAttribute("pointsBean");
 
 
                 String[] selectedX = req.getParameterValues("x");
