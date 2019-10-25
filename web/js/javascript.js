@@ -1,46 +1,60 @@
 // Checkbox X
 var checkBox_Container = $('input:checkbox');
-let selectedX = new Array(); //записываем все выбранные кнопки
-var requestX = "-4,";
-
+let selectedX = new Array();
+selectedX.push(-4);
 checkBox_Container.bind("click", function (e) {
     selectedX = new Array();
-    $('input:checkbox:checked').each(function(){
+    $('input:checkbox:checked').each(function () {
         selectedX.push($(this).val());
     });
-    requestX = "";
-    selectedX.forEach(function(value1, value2, set){
-        requestX = requestX + value1 + ",";
-    })
-    buttonCondition();
+    send_buttonCondition();
 });
+
+function checkX() {
+
+    if (selectedX.length == 0) {
+        $("#errorX").attr("data-title");
+        $("#errorX").fadeTo(500, 1);
+        return false;
+
+    } else {
+        $("#errorX").fadeTo(0, 0);
+        return true;
+
+    }
+
+}
 
 // Список R
 var selectR = $('select');
 var selectedR_value = 1;
 
 selectR.each(function (index, elem) {
-    elem.addEventListener("click", function (e) {
+    elem.addEventListener("change", function (e) {
+        $('#timezoneOffset_id').attr("value", new Date().getTimezoneOffset());
         ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
         selectedR_value = $('select').val();
         $('#r_id').attr("value", selectedR_value);
         drawGraph();
+        document.getElementById('iFrame').src = "check?r=" + selectedR_value;
     });
 });
 
+//текстовое поле Y
 var textY;
-function checkY(textY) {  //пересмотреть функцию, валидация должна быть на сервере
 
+function checkY(textY) {
     if (!(textY == "")) {
-        var pattern =  /^\./.test(textY) || /\.$/.test(textY)
+        var pattern = /^\./.test(textY) || /\.$/.test(textY)
             || /^-\./.test(textY) || /-0$/.test(textY) || /^0{2,}/.test(textY) || /^0+./.test(textY);
 
-        if ( isNaN(textY) && !Number.isFinite(Number(textY)) ||  pattern) {
+        if (isNaN(textY) && !Number.isFinite(Number(textY)) || pattern) {
             wrongValue("Некорректное значение Y");
             return false;
         } else {
-            if ((textY>=10) || (textY<=-10) ){
+            if ((textY >= 10) || (textY <= -10)) {
                 wrongValue('Выход за пределы диапазона');
+                return false;
             } else {
                 if (strCompare(textY, -3) > 0 && strCompare(textY, 3) < 0) {
                     $("#errorY").fadeTo(0, 0);
@@ -57,35 +71,13 @@ function checkY(textY) {  //пересмотреть функцию, валид�
     }
 }
 
-function switchButton() {
-    $('#send_form').removeAttr('disabled');
-    $("#send_form").css("background-color", "rgb(60, 16, 44)");
-    $("#send_form").addClass("changeColor");
+function wrongValue(value) {
+    $("#errorY").attr("data-title", value);
+    $("#errorY").fadeTo(500, 1);
+    // disableButton();
 }
 
-function disableButton() {
-    $('#send_form').attr('disabled');
-    $("#send_form").css("background-color", "darkgrey");
-    $("#send_form").removeClass("changeColor");
-}
-
-function checkX() {
-    // checkY(textY);
-    if (requestX.length==0){
-        $("#errorX").attr("data-title");
-        $("#errorX").fadeTo(500, 1);
-        return false;
-        // disableButton();
-    } else {
-        $("#errorX").fadeTo(0, 0);
-        return true;
-        // switchButton();
-    }
-    // checkY(textY);
-}
-
-
-function strCompare( first, second) {
+function strCompare(first, second) {
     first = new String(first);
     second = new String(second);
     if (first.includes(".")) {
@@ -96,12 +88,11 @@ function strCompare( first, second) {
         }
     }
 
-    if  (first.indexOf('-') > -1 && second.indexOf('-') > -1)
+    if (first.indexOf('-') > -1 && second.indexOf('-') > -1)
 
         if (first.localeCompare(second) == 0)
             return 0;
-        else
-        if (first.localeCompare(second) == 1)
+        else if (first.localeCompare(second) == 1)
             return -1;
         else return 1;
 
@@ -111,24 +102,31 @@ function strCompare( first, second) {
 
 $("#form_input").bind("input", function () {
     textY = $("#form_input").val().replace(",", '.');
-    buttonCondition();
+    send_buttonCondition();
 });
 
-function wrongValue(value) {
-    $("#errorY").attr("data-title", value);
-    $("#errorY").fadeTo(500, 1);
-    disableButton();
-}
+//деактивация кнопки отправки в зависимости от выбранных значений X и Y
+function send_buttonCondition() {
 
-function buttonCondition(){
-    // TODO Исправить
-    if (checkX() && checkX()){
+    if (checkX() && checkY(textY)) {
         switchButton();
+        $('#timezoneOffset_id').attr("value", new Date().getTimezoneOffset());
     } else {
         disableButton();
     }
 }
 
+function disableButton() {
+    $('#send_form').attr('disabled', 'disabled');
+    $("#send_form").css("background-color", "darkgrey");
+    $("#send_form").removeClass("changeColor");
+}
+
+function switchButton() {
+    $('#send_form').removeAttr('disabled');
+    $("#send_form").css("background-color", "rgb(60, 16, 44)");
+    $("#send_form").addClass("changeColor");
+}
 
 //отправка
 // $("#send_form").click(function (event) {
@@ -189,111 +187,67 @@ function buttonCondition(){
 //
 // });
 
-$(document).ready(function() {
-    $(window).keydown(function(event){
-        if(event.keyCode == 13) {
+$(document).ready(function () {
+    $(window).keydown(function (event) {
+        if (event.keyCode == 13) {
             event.preventDefault();
             return false;
         }
     });
 });
 
-function createTable() {
-    cleanButton.css('display', "inline");
-    $("table").css("display", "block");
-
-}
-
-// очистка таблицы
-var cleanButton = $('#cleanTable');
-
-cleanButton.bind("click", function (e) {
-    var tableRow = $("table tr");
-    tableRow.remove(":not(:first)"); //удаляет в табл. все кроме шапки
-    ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки)
-    drawGraph();
-});
-
-// function addRow(id, answer) {
-//     var row = document.createElement("TR");
-//
-//     var td1 = document.createElement("TD");
-//     var innerDivX = document.createElement("div");
-//     innerDivX.classList.add("tdScroll");
-//     innerDivX.appendChild(document.createTextNode(answer.x));
-//     td1.appendChild(innerDivX);
-//
-//     var td2 = document.createElement("TD");
-//     var innerDivY = document.createElement("div");
-//     innerDivY.classList.add("tdScroll");
-//     innerDivY.appendChild(document.createTextNode(answer.y));
-//     td2.appendChild(innerDivY);
-//     var td3 = document.createElement("TD");
-//     td3.appendChild(document.createTextNode(answer.r));
-//     var td4 = document.createElement("TD");
-//     td4.appendChild(document.createTextNode(answer.hit?"Точка попадает в заданную область":"Точка не попадает в заданную область"));
-//     var td5 = document.createElement("TD");
-//     td5.appendChild(document.createTextNode(answer.currentTime));
-//     td5.classList.add("time");
-//     td5.setAttribute("offset" , answer.offset);
-//     var td6 = document.createElement("TD");
-//     var time = document.createTextNode((answer.time + ' мс'));
-//     td6.appendChild(time);
-//     row.appendChild(td1);
-//     row.appendChild(td2);
-//     row.appendChild(td3);
-//     row.appendChild(td4);
-//     row.appendChild(td5);
-//     row.appendChild(td6);
-//     $("tbody").append(row);
-//     // changeTime(Number(answer.offset));
+// function createTable() {
+//     cleanButton.css('display', "inline");
+//     $("table").css("display", "block");
 // }
 
+// // очистка таблицы
+// var cleanButton = $('#cleanTable');
+//
+// cleanButton.bind("click", function (e) {
+//     var tableRow = $("table tr");
+//     tableRow.remove(":not(:first)"); //удаляет в табл. все кроме шапки
+//     ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки)
+//     drawGraph();
+// });
+
+
 // отрисовка
-
-var myCanvas= document.querySelector("#myCanvas");
-
-
-selectedR_value = 1
+var myCanvas = document.querySelector("#myCanvas");
 
 $('#myCanvas').bind("click", function (elem) {
     let br = myCanvas.getBoundingClientRect();
     let left = br.left; // X координата верхнего левого края канваса
     let top = br.top; // Y координата верхнего левого края канваса
     var selectedPoint = {
-        X:(elem.clientX-150 - left)/30,
-        Y:(-(elem.clientY - top)+150)/30,
-        R:selectedR_value
+        X: (elem.clientX - 150 - left) / 30,
+        Y: (-(elem.clientY - top) + 150) / 30,
+        R: selectedR_value
     }
-    //отправка данных на сервер
 
     $.ajax({
-        url: "ControllerServlet",
-        data: {selectedX: selectedPoint.X , y: selectedPoint.Y, r: selectedPoint.R, timezoneOffset: new Date().getTimezoneOffset()},
+        url: "check",
+        data: {
+            x: selectedPoint.X,
+            y: selectedPoint.Y,
+            r: selectedPoint.R,
+            timezoneOffset: new Date().getTimezoneOffset()
+        },
         type: 'GET',
         success: function (data) {
-            // data = data.slice(0, -2).split("&");
-            //
-            // let answer = jQuery.parseJSON(data);
-            //
-            //     // ctx.clearRect(0, 0, 305, 305); //очистка для перерисовки
-            //     // drawGraph();
-            // drawPoint(answer.hit?"green":"red",answer.x,answer.y); //отмечаем точку
-            // createTable();
-            // addRow("table", answer);
+            document.getElementById('iFrame').src = document.getElementById('iFrame').src
         }
 
     });
-    // drawGraph();
 
 })
 
 var ctx = myCanvas.getContext("2d");
 
-//
 ctx.font = "10px Verdana";
 ctx.lineWidth = 1.5; //толщина линий
-// //НАЧАЛЬНАЯ СИСТЕМА КООРДИНАТ
+
+//НАЧАЛЬНАЯ СИСТЕМА КООРДИНАТ
 drawCoordinatePlane();
 drawNumbers();
 drawGraph();
@@ -308,7 +262,7 @@ function drawCoordinatePlane() {
         x1: 150, y1: 3,
         x2: 150, y2: 305,
     });
-//ось OX
+    //ось OX
     $('#myCanvas').drawLine({
         strokeStyle: 'rgb(60, 16, 44)',
         strokeWidth: 2,
@@ -400,10 +354,10 @@ function drawFigures() {
         fillStyle: "rgb(255, 162, 211)",
         strokeStyle: "rgb(60, 16, 44)",
         strokeWidth: 1,
-        x: 150, y: 150-selectedR_value*30,
+        x: 150, y: 150 - selectedR_value * 30,
         fromCenter: false,
-        width: selectedR_value*30,
-        height: selectedR_value*30
+        width: selectedR_value * 30,
+        height: selectedR_value * 30
     });
 
 //треугольник
@@ -414,8 +368,8 @@ function drawFigures() {
         rounded: true,
         closed: true,
         x1: 150, y1: 150,
-        x2: 150, y2: 150+selectedR_value*30,
-        x3: 150-selectedR_value*15, y3: 150
+        x2: 150, y2: 150 + selectedR_value * 30,
+        x3: 150 - selectedR_value * 15, y3: 150
     });
 
 //полукруг
@@ -424,7 +378,7 @@ function drawFigures() {
         strokeStyle: "rgb(60, 16, 44)",
         strokeWidth: 1,
         x: 150, y: 150,
-        radius: selectedR_value*15,
+        radius: selectedR_value * 15,
         // начальный и конечный углы в градусах
         start: 90, end: 180
     });
@@ -432,8 +386,7 @@ function drawFigures() {
 }
 
 
-
-function drawPoint(color,x,y) {
+function drawPoint(color, x, y) {
 
     ctx.beginPath();
     ctx.arc(150 + x * 30, 150 - y * 30, 1, 0, 2 * Math.PI, true);

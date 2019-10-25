@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="pictures/vt.jpg" type="image/jpg">
 
-    <title>Лабораторная 1</title>
+    <title>Лабораторная 2</title>
     <style>
         .selected {
             background: rgb(255, 162, 211);
         }
     </style>
-    <jsp:useBean id="pointsBean"  class="app.PointsTableBean" scope="session"/>
+    <jsp:useBean id="pointsBean" class="app.PointsTableBean" scope="session"/>
 </head>
 
 <body>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="content">
-        <form  method="GET" action="check" target="result">
+        <form method="GET" action="check" target="result">
 
             <p>Изменение Х</p>
             <div id="checkBox_Container">
@@ -69,28 +69,28 @@
                     <div class="separatingDiv" style="width: 23px;"></div>
                     <label class="checkbox">
                         <input type="checkbox" name="x" value="0"/>
-                        <div class="checkbox__text">  0</div>
+                        <div class="checkbox__text"> 0</div>
                     </label>
                     <div class="separatingDiv" style="width: 26px;"></div>
                     <label class="checkbox">
                         <input type="checkbox" name="x" value="1"/>
-                        <div class="checkbox__text">  1</div>
+                        <div class="checkbox__text"> 1</div>
                     </label>
                 </div>
                 <div class="checkBoxDiv">
                     <label class="checkbox">
                         <input type="checkbox" name="x" value="2"/>
-                        <div class="checkbox__text">  2</div>
+                        <div class="checkbox__text"> 2</div>
                     </label>
-                    <div class="separatingDiv" style="width: 25px;" ></div>
+                    <div class="separatingDiv" style="width: 25px;"></div>
                     <label class="checkbox">
                         <input type="checkbox" name="x" value="3"/>
-                        <div class="checkbox__text">  3</div>
+                        <div class="checkbox__text"> 3</div>
                     </label>
                     <div class="separatingDiv" style="width: 26px;"></div>
                     <label class="checkbox">
                         <input type="checkbox" name="x" value="4"/>
-                        <div class="checkbox__text">  4</div>
+                        <div class="checkbox__text"> 4</div>
                     </label>
                 </div>
 
@@ -113,14 +113,12 @@
                     <option>5</option>
                 </select>
                 <input type="hidden" autocomplete="off" name="r" id="r_id" value="1">
-                <%--<div id="errorR" class="errorImage" data-title='Выход за пределы диапазона'><img--%>
-                        <%--src="pictures/error.png">--%>
-                <%--</div>--%>
-            </div>
 
+            </div>
+                <input type="hidden" autocomplete="off" name="timezoneOffset"  id="timezoneOffset_id" value="">
             <div id="buttons">
-                <input id="send_form" type="submit" name="send" value="Отправить" disabled/>
-                <button id="cleanTable" type="button" style="display: none;">Очистить таблицу</button>
+                <input id="send_form" type="submit" name="send" value="Отправить" disabled="disabled"/>
+                <%--<button id="cleanTable" type="button" style="display: none;">Очистить таблицу</button>--%>
             </div>
 
         </form>
@@ -129,7 +127,7 @@
 
 <div id="answer">
 
-    <iframe id="iFrame" name="result" ></iframe>
+    <iframe id="iFrame" name="result" src="check?r=1"></iframe>
 
 </div>
 

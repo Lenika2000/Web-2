@@ -1,0 +1,45 @@
+table {
+    text-align: center;
+    margin: auto;
+    font-weight: 200;
+    color: #0f0f0f; /* цвет шрифта наследуется всеми тэгами td таблицы */
+
+    width: 490px; /* Ширина таблицы */
+    border-radius: 8px;
+
+    border-bottom: 2px solid #dfdfdf;
+    border-collapse: separate;
+}
+
+table tbody tr:nth-child(1n) {
+    background: rgb(255, 162, 211);
+}
+
+table tbody tr:nth-child(2n) {
+    background: rgba(255, 162, 211,0.5);
+}
+
+table tr td {
+    border-right: 1px solid #dfdfdf;
+    overflow-x: auto;
+}
+
+.tdScroll {
+    width:53px;
+    overflow:auto;
+}
+
+.tdScroll::-webkit-scrollbar-track , ::-webkit-scrollbar-track{
+    background-color: rgba(13, 0, 60, 0.17);
+    box-shadow:1px 1px 3px #ffcde8 inset;
+    margin: 3px;
+
+}
+
+.tdScroll::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb { /* цвет бегунка полосы, а так же его закругление. */
+    background-color: rgb(60, 16, 44);
+}
+
+.tdScroll::-webkit-scrollbar , ::-webkit-scrollbar {  /*Основная ширина полосы прокрутки.*/
+    height: 6px;
+}

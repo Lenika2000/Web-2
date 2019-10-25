@@ -74,12 +74,10 @@ form , canvas {
 }
 
 form {
-    padding: 0.5% 0.5% 0.5% 0.5%;
     margin: 0.5%;
     width: 620px;
     text-align: left;
 }
-
 
 .errorImage {
     display: inline;
@@ -163,7 +161,6 @@ form {
     box-shadow: inset 0 2px 3px rgba(0,0,0,.2), 0 0 0 1px rgb(60, 16, 44);
 }
 
-
 #form_input  {
 
     background: rgb(60, 16, 44);
@@ -178,7 +175,6 @@ form {
 
     font-size: 1em;
     font-weight: 300;
-    /*text-align: center;*/
 
     transition: transform 0.3s ease-out;
 }
@@ -191,9 +187,8 @@ form {
 }
 
 
-
 /*селектор атрибута*/
-input[name="send"], #cleanTable {
+input[name="send"]  {
     display: inline;
     margin: 0.5%;
     padding: 1% 2%;
@@ -224,7 +219,6 @@ input[name="send"], #cleanTable {
 select{
     border: none;
     outline: none;
-
 }
 
 #send_form {
@@ -232,7 +226,7 @@ select{
     display: inline;
 }
 
-#cleanTable:hover , .changeColor:hover {
+.changeColor:hover {
     transition: all 0.3s ease-out;
     transform: scale(1.02, 1.02);
     box-shadow: rgba(255, 255, 255, 0.3) 0 0 16px 2px;
@@ -251,58 +245,10 @@ select{
     background-position: center center;
     background-size: cover;
     text-align: center;
-    overflow: auto;
-    max-height: 500px;
 }
 
 #iFrame {
     width: 600px;
+    border-style: none;
 }
 
-
-table {
-    text-align: center;
-    margin: auto;
-    font-weight: 200;
-    color: #0f0f0f; /* цвет шрифта наследуется всеми тэгами td таблицы */
-
-    width: 490px; /* Ширина таблицы */
-    display: none;
-    border-radius: 8px;
-
-    border-bottom: 2px solid #dfdfdf;
-    border-collapse: separate;
-    /*border-spacing: 0px; !* толщина границ  *!*/
-}
-
-table tbody tr:nth-child(1n) {
-    background: rgb(255, 162, 211);
-}
-
-table tbody tr:nth-child(2n) {
-    background: rgba(255, 162, 211,0.5);
-}
-
-table tr td {
-    border-right: 1px solid #dfdfdf;
-    overflow-x: auto;
-}
-
-.tdScroll {
-    width:53px;
-    overflow:auto;
-}
-
-.tdScroll::-webkit-scrollbar-track , #answer::-webkit-scrollbar-track{
-    background-color:rgba(60, 16, 44, 0.2);
-    box-shadow:0px 0px 3px #000 inset;
-    margin: 3px;
-}
-
-.tdScroll::-webkit-scrollbar-thumb, #answer::-webkit-scrollbar-thumb { /* цвет бегунка полосы, а так же его закругление. */
-    background-color: rgb(60, 16, 44);
-}
-
-.tdScroll::-webkit-scrollbar, #answer::-webkit-scrollbar{  /*Основная ширина полосы прокрутки.*/
-    height: 6px;
-}

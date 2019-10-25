@@ -1,70 +1,36 @@
 package app.Entities;
 
-import sun.util.resources.LocaleData;
-
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.TimeZone;
-
+import java.time.format.DateTimeFormatter;
 
 public class Point implements Serializable {
+    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     private double x;
     private double y;
     private double r;
-    private int timezoneOffset;
     private boolean hit;
-//    private long time ;
     private String currentTime;
-//
-//    ZonedDateTime currentDate = ZonedDateTime.now( ZoneOffset.UTC );
-    final SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-
-
-
-//// Give it to me in GMT time.
-//    sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-//    System.out.println("GMT time: " + sdf.format(currentTime));
 
     public Point(double x, double y, double r, int timezoneOffset) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.timezoneOffset = timezoneOffset;
         hit = checkArea();
-//        time = new Date().getTime(); //количество миллисекунд с 1 января 1970г
-        currentTime = sdf.format(new Date());
+        currentTime = LocalDateTime.now(ZoneOffset.UTC).minusMinutes(timezoneOffset).format(formatter);
     }
 
-
-//    public void setTime(long time) {
-//        this.time = time;
-//    }
-
-//функция вычиления времени клиента с учетом часового пояса
-
-    private boolean checkArea(){
+    private boolean checkArea() {
 
         boolean circle = ((Math.pow(x, 2) + Math.pow(y, 2) <= (Math.pow(r / 2, 2))) && y <= 0 && x >= 0);
         boolean square = (x <= r && y <= r && y >= 0 && x >= 0);
-        boolean triangle = (y >= (-2*x - r) && y <= 0 && x <= 0 && x >= -r/2);
+        boolean triangle = (y >= (-2 * x - r) && y <= 0 && x <= 0 && x >= -r / 2);
 
         return square || triangle || circle;
     }
 
-
-    public String toJson() {
-        return "{ \"x\" : " + x +
-                " , \"y\" : \"" + y +
-                "\" , \"r\" : \"" + r +
-                "\" , \"timezoneOffset\" : \"" + timezoneOffset +
-                "\" , \"hit\" : " + hit +
-//                " , \"time\" : \"" + time +
-                "\" , \"currentTime\" : \"" + currentTime +
-                "\"}";
-    }
 
     public double getX() {
         return x;
@@ -80,6 +46,14 @@ public class Point implements Serializable {
 
     public boolean hit() {
         return hit;
+    }
+
+    public boolean hit(double R) {
+        boolean circle = ((Math.pow(x, 2) + Math.pow(y, 2) <= (Math.pow(R / 2, 2))) && y <= 0 && x >= 0);
+        boolean square = (x <= R && y <= R && y >= 0 && x >= 0);
+        boolean triangle = (y >= (-2 * x - R) && y <= 0 && x <= 0 && x >= -R / 2);
+
+        return square || triangle || circle;
     }
 
     public String getCurrentTime() {

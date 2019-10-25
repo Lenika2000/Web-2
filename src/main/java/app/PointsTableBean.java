@@ -9,26 +9,26 @@ import java.util.List;
 
 public class PointsTableBean implements Serializable {
 
-//    private int n = 1;
     private List<Point> points;
+    private double R;
+
+    public double getR() {
+        return R;
+    }
 
     public PointsTableBean() {
         points = new ArrayList<>();
     }
 
-//    int getN() {
-//        return n;
-//    }
-
     public void addPoint(Point point) {
-//        n++;
         points.add(point);
     }
 
+    public void setR(double r) {
+        R = r;
+    }
+
     public List getPoints() {
-//        while (points.size() > 10) {
-//            points.remove(0);
-//        }
 
         List<Point> reversed = new ArrayList(points);
         Collections.reverse(reversed);

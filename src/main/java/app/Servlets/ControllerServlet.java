@@ -15,7 +15,7 @@ public class ControllerServlet extends HttpServlet {
         String y = request.getParameter("y");
         String r = request.getParameter("r");
 
-        if (x == null || y == null || r == null) {
+        if (r == null) {
             request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         } else {
             request.getServletContext().getRequestDispatcher("/check").forward(request, response);
